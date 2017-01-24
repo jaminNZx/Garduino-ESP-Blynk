@@ -32,7 +32,7 @@ int timer1, timer2;
 
 void updateMoisture() {
   //int moistureSensor = analogRead(A0);
-  int moistureSensor = random(1023);
+  int moistureSensor = random(1023); // for testing just produce a random value
   moistureSensor = map(moistureSensor, 0, 1023, 1, 100);
   Serial.print("Moisture=");
   Serial.println(moistureSensor);
