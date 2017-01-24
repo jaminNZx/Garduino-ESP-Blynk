@@ -37,13 +37,13 @@ WidgetBridge sensor1(vPIN_SENS1_BRIDGE);
 WidgetBridge sensor2(vPIN_SENS2_BRIDGE);
 
 
-char auth[] = "d8a785e101d74d5696a13c8fe597c981";
+char auth[] = "xxxxxxxxxxxxxxxxxxx";
 
-char auth_sensor1[] = "6e17b587a36c4892911267bdcc7062ce";
-char auth_sensor2[] = "420ff5509d974a218ba945fea719d945";
+char auth_sensor1[] = "xxxxxxxxxxxxxxxxxxxxxxx";
+char auth_sensor2[] = "xxxxxxxxxxxxxxxxxxxxxxx";
 
-char ssid[] = "PrettyFlyForAWiFi";
-char pass[] = "custom2015";
+char ssid[] = "xxxxxxxxxxxxxxxx";
+char pass[] = "xxxxxxxxxxxxxxxx";
 
 int tap1_threshold_value, tap2_threshold_value, tap3_threshold_value;
 int tap1_timeout_value,   tap2_timeout_value,   tap3_timeout_value;
@@ -210,7 +210,7 @@ void setup() {
 
   Serial.begin(115200);
   WiFi.mode(WIFI_STA);
-  Blynk.begin(auth, ssid, pass, IPAddress(192, 168, 1, 2));
+  Blynk.begin(auth, ssid, pass);
   while (Blynk.connect() == false) {}
   ArduinoOTA.setHostname("Garduino-Base");
   ArduinoOTA.begin();
