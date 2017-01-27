@@ -78,7 +78,7 @@ void setup() {
   Blynk.syncVirtual(vPIN_BUTTON_NOSLEEP);
   ArduinoOTA.setHostname(OTA_HOSTNAME);
   ArduinoOTA.begin();
-  Blynk.virtualWrite(vPIN_LABEL, LABEL_SENSOR1);
+  Blynk.virtualWrite(vPIN_LABEL, LABEL_SENSOR);
   Blynk.virtualWrite(vPIN_SLEEP_LED, 0);
   updateMoisture(); // read and send moisture data to dash and BASE
   timer1 = timer.setInterval(10000L, updateMoisture);
@@ -90,3 +90,4 @@ void loop() {
   ArduinoOTA.handle();
   timer.run();
 }
+
