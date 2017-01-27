@@ -1,17 +1,17 @@
 /**************************************************************
- *
- *      Garduino - Base Sketch
- *      
- *      An Arduino Controlled Irrigation System using 
- *      Wifi connected moisture sensors and integrated
- *      with the Blynk Mobile App for input and control.
- *      
- *      Github: https://github.com/jaminNZx/Garduino-ESP-Blynk
- *
- *      Written by: Ben Selkirk (JaminNZx)
- *      
- *      Official Blynk Support Forum: Coming Soon
- *      
+
+        Garduino - Base Sketch
+
+        An Arduino Controlled Irrigation System using
+        Wifi connected moisture sensors and integrated
+        with the Blynk Mobile App for input and control.
+
+        Github: https://github.com/jaminNZx/Garduino-ESP-Blynk
+
+        Written by: Ben Selkirk (JaminNZx)
+
+        Official Blynk Support Forum: Coming Soon
+
  **************************************************************/
 
 //#define BLYNK_DEBUG
@@ -42,6 +42,14 @@ unsigned int flowMilliLitres = 0;
 unsigned long totalMilliLitres = 0;
 unsigned long oldTime = 0;
 
+void printTask(String a, String b) {
+  Serial.print(a + String("="));
+  Serial.println(b);
+  terminal.print(a + String("="));
+  terminal.println(b);
+  terminal.flush();
+}
+
 BLYNK_CONNECTED() {
   sensor1.setAuthToken(AUTH_SENSOR1);
   sensor2.setAuthToken(AUTH_SENSOR2);
@@ -50,11 +58,7 @@ BLYNK_CONNECTED() {
 
 BLYNK_WRITE(vPIN_MOISTURE1) {
   int moisture1 = param.asInt();
-  Serial.print("SENSOR1=");
-  Serial.println(moisture1);
-  terminal.print("SENSOR1=");
-  terminal.println(moisture1);
-  terminal.flush();
+  printTask("SENSOR1", String(moisture1));
 
   if (moisture1 <= tap1_threshold_value && digitalRead(TAP1)) {
     TAP1_On();
@@ -64,11 +68,7 @@ BLYNK_WRITE(vPIN_MOISTURE1) {
 
 BLYNK_WRITE(vPIN_MOISTURE2) {
   int moisture2 = param.asInt();
-  Serial.print("SENSOR2=");
-  Serial.println(moisture2);
-  terminal.print("SENSOR2=");
-  terminal.println(moisture2);
-  terminal.flush();
+  printTask("SENSOR2", String(moisture2));
 
   if (moisture2 <= tap2_threshold_value && digitalRead(TAP2)) {
     TAP2_On();
@@ -78,11 +78,7 @@ BLYNK_WRITE(vPIN_MOISTURE2) {
 
 BLYNK_WRITE(vPIN_MOISTURE3) {
   int moisture3 = param.asInt();
-  Serial.print("SENSOR3=");
-  Serial.println(moisture3);
-  terminal.print("SENSOR3=");
-  terminal.println(moisture3);
-  terminal.flush();
+  printTask("SENSOR3", String(moisture3));
 
   if (moisture3 <= tap3_threshold_value && digitalRead(TAP3)) {
     TAP3_On();
@@ -94,18 +90,14 @@ void TAP1_On() {
   digitalWrite(TAP1, LOW);
   Blynk.virtualWrite(vPIN_TAP1_LED, 255);
   Blynk.virtualWrite(vPIN_TAP1_MANUAL, 1);
-  Serial.println("TAP1=ON");
-  terminal.println("TAP1=ON");
-  terminal.flush();
+  printTask("TAP1", "ON");
 }
 
 void TAP1_Off() {
   digitalWrite(TAP1, HIGH);
   Blynk.virtualWrite(vPIN_TAP1_LED, 0);
   Blynk.virtualWrite(vPIN_TAP1_MANUAL, 0);
-  Serial.println("TAP1=OFF");
-  terminal.println("TAP1=OFF");
-  terminal.flush();
+  printTask("TAP1", "OFF");
 }
 
 void TAP1_Toggle() {
@@ -120,18 +112,14 @@ void TAP2_On() {
   digitalWrite(TAP2, LOW);
   Blynk.virtualWrite(vPIN_TAP2_LED, 255);
   Blynk.virtualWrite(vPIN_TAP2_MANUAL, 1);
-  Serial.println("TAP2=ON");
-  terminal.println("TAP2=ON");
-  terminal.flush();
+  printTask("TAP2", "ON");
 }
 
 void TAP2_Off() {
   digitalWrite(TAP2, HIGH);
   Blynk.virtualWrite(vPIN_TAP2_LED, 0);
   Blynk.virtualWrite(vPIN_TAP2_MANUAL, 0);
-  Serial.println("TAP2=OFF");
-  terminal.println("TAP2=OFF");
-  terminal.flush();
+  printTask("TAP2", "OFF");
 }
 
 void TAP2_Toggle() {
@@ -146,18 +134,14 @@ void TAP3_On() {
   digitalWrite(TAP3, LOW);
   Blynk.virtualWrite(vPIN_TAP3_LED, 255);
   Blynk.virtualWrite(vPIN_TAP3_MANUAL, 1);
-  Serial.println("TAP3=ON");
-  terminal.println("TAP3=ON");
-  terminal.flush();
+  printTask("TAP3", "ON");
 }
 
 void TAP3_Off() {
   digitalWrite(TAP3, HIGH);
   Blynk.virtualWrite(vPIN_TAP3_LED, 0);
   Blynk.virtualWrite(vPIN_TAP3_MANUAL, 0);
-  Serial.println("TAP3=OFF");
-  terminal.println("TAP3=OFF");
-  terminal.flush();
+  printTask("TAP3", "OFF");
 }
 
 void TAP3_Toggle() {
@@ -172,18 +156,14 @@ void TAP4_On() {
   digitalWrite(TAP4, LOW);
   Blynk.virtualWrite(vPIN_TAP4_LED, 255);
   Blynk.virtualWrite(vPIN_TAP4_MANUAL, 1);
-  Serial.println("TAP4=ON");
-  terminal.println("TAP4=ON");
-  terminal.flush();
+  printTask("TAP4", "ON");
 }
 
 void TAP4_Off() {
   digitalWrite(TAP4, HIGH);
   Blynk.virtualWrite(vPIN_TAP4_LED, 0);
   Blynk.virtualWrite(vPIN_TAP4_MANUAL, 0);
-  Serial.println("TAP4=OFF");
-  terminal.println("TAP4=OFF");
-  terminal.flush();
+  printTask("TAP4", "OFF");
 }
 
 void TAP4_Toggle() {
@@ -196,52 +176,28 @@ void TAP4_Toggle() {
 
 BLYNK_WRITE(vPIN_TAP1_THRESHOLD) {
   tap1_threshold_value = param.asInt();
-  Serial.print("TAP1 THRESHOLD=");
-  Serial.println(tap1_threshold_value);
-  terminal.print("TAP1 THRESHOLD=");
-  terminal.println(tap1_threshold_value);
-  terminal.flush();
+  printTask("TAP1 THRESHOLD", String(tap1_threshold_value));
 }
 BLYNK_WRITE(vPIN_TAP2_THRESHOLD) {
   tap2_threshold_value = param.asInt();
-  Serial.print("TAP2 THRESHOLD=");
-  Serial.println(tap2_threshold_value);
-  terminal.print("TAP2 THRESHOLD=");
-  terminal.println(tap2_threshold_value);
-  terminal.flush();
+  printTask("TAP2 THRESHOLD", String(tap2_threshold_value));
 }
 BLYNK_WRITE(vPIN_TAP3_THRESHOLD) {
   tap3_threshold_value = param.asInt();
-  Serial.print("TAP3 THRESHOLD=");
-  Serial.println(tap3_threshold_value);
-  terminal.print("TAP3 THRESHOLD=");
-  terminal.println(tap3_threshold_value);
-  terminal.flush();
+  printTask("TAP3 THRESHOLD", String(tap3_threshold_value));
 }
 
 BLYNK_WRITE(vPIN_TAP1_TIMEOUT) {
   tap1_timeout_value = param.asInt() * 60000;
-  Serial.print("TAP1 TIMEOUT=");
-  Serial.println(tap1_timeout_value / 1000);
-  terminal.print("TAP1 TIMEOUT=");
-  terminal.println(tap1_timeout_value / 1000);
-  terminal.flush();
+  printTask("TAP1 TIMEOUT", String(tap1_timeout_value / 1000)));
 }
 BLYNK_WRITE(vPIN_TAP2_TIMEOUT) {
   tap2_timeout_value = param.asInt() * 60000;
-  Serial.print("TAP2 TIMEOUT=");
-  Serial.println(tap2_timeout_value / 1000);
-  terminal.print("TAP2 TIMEOUT=");
-  terminal.println(tap2_timeout_value / 1000);
-  terminal.flush();
+  printTask("TAP2 TIMEOUT", String(tap2_timeout_value / 1000)));
 }
 BLYNK_WRITE(vPIN_TAP3_TIMEOUT) {
   tap3_timeout_value = param.asInt() * 60000;
-  Serial.print("TAP3 TIMEOUT=");
-  Serial.println(tap3_timeout_value / 1000);
-  terminal.print("TAP3 TIMEOUT=");
-  terminal.println(tap3_timeout_value / 1000);
-  terminal.flush();
+  printTask("TAP3 TIMEOUT", String(tap3_timeout_value / 1000)));
 }
 
 BLYNK_WRITE(vPIN_TAP1_MANUAL) {
@@ -305,11 +261,7 @@ void pulseCounter() {
 }
 
 void ShowFlowSensorData() {
-  Serial.print("WATER LITRES=");
-  Serial.println((float)totalMilliLitres / 1000);
-  terminal.print("WATER LITRES=");
-  terminal.println((float)totalMilliLitres / 1000);
-  terminal.flush();
+  printTask("WATER LITRES", String((float)totalMilliLitres / 1000)));
 }
 
 void setup() {
