@@ -25,6 +25,10 @@
 #define USE_LOCAL_SERVER
 #define SERVER                  IPAddress(192, 168, 1, 2)
 /*
+   Console Output (Debug/Log)
+*/
+#define OUTPUT_TERMINAL
+/*
    Hardware Pins
 */
 #define TAP1                    14 // D5

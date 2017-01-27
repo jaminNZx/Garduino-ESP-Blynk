@@ -29,10 +29,11 @@ WidgetBridge sensor2(vPIN_SENS2_BRIDGE);
 WidgetBridge sensor3(vPIN_SENS3_BRIDGE);
 WidgetTerminal terminal(vPIN_TERMINAL);
 /*
-   GLOBAL VARIABLES
+   BLYNK WRITES
 */
 int tap1_threshold_value = 10, tap2_threshold_value = 10, tap3_threshold_value = 10;
 int tap1_timeout_value = 60000,   tap2_timeout_value = 60000,   tap3_timeout_value = 60000;
+
 byte sensorInterrupt = 4;
 float calibrationFactor = 4.5;
 volatile byte pulseCount = 0;
@@ -44,11 +45,15 @@ unsigned long oldTime = 0;
    OUTPUT TO CONSOLE FUNCTION
 */
 void printTask(String a, String b) {
+#if defined(OUTPUT_SERIAL)
   Serial.print(a + String("="));
   Serial.println(b);
+#endif
+#if defined(OUTPUT_TERMINAL)
   terminal.print(a + String("="));
   terminal.println(b);
   terminal.flush();
+#endif
 }
 /*
    BLYNK BRIDGE
@@ -158,15 +163,15 @@ BLYNK_WRITE(vPIN_TAP3_THRESHOLD) {
 
 BLYNK_WRITE(vPIN_TAP1_TIMEOUT) {
   tap1_timeout_value = param.asInt() * 60000;
-  printTask("TAP1 TIMEOUT", String(tap1_timeout_value / 1000)));
+  printTask("TAP1 TIMEOUT", String(tap1_timeout_value / 1000));
 }
 BLYNK_WRITE(vPIN_TAP2_TIMEOUT) {
   tap2_timeout_value = param.asInt() * 60000;
-  printTask("TAP2 TIMEOUT", String(tap2_timeout_value / 1000)));
+  printTask("TAP2 TIMEOUT", String(tap2_timeout_value / 1000));
 }
 BLYNK_WRITE(vPIN_TAP3_TIMEOUT) {
   tap3_timeout_value = param.asInt() * 60000;
-  printTask("TAP3 TIMEOUT", String(tap3_timeout_value / 1000)));
+  printTask("TAP3 TIMEOUT", String(tap3_timeout_value / 1000));
 }
 
 BLYNK_WRITE(vPIN_TAP1_MANUAL) {
@@ -258,7 +263,7 @@ void pulseCounter() {
   pulseCount++;
 }
 void ShowFlowSensorData() {
-  printTask("WATER LITRES", String((float)totalMilliLitres / 1000)));
+  printTask("WATER LITRES", String((float)totalMilliLitres / 1000));
 }
 /*
    SETUP
@@ -311,5 +316,5 @@ void loop() {
   timer.run();
 }
 /*
-   
+
 */
