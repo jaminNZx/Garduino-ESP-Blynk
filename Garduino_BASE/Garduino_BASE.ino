@@ -1,3 +1,19 @@
+/**************************************************************
+ *
+ *      Garduino - Base Sketch
+ *      
+ *      An Arduino Controlled Irrigation System using 
+ *      Wifi connected moisture sensors and integrated
+ *      with the Blynk Mobile App for input and control.
+ *      
+ *      Github: https://github.com/jaminNZx/Garduino-ESP-Blynk
+ *
+ *      Written by: Ben Selkirk (JaminNZx)
+ *      
+ *      Official Blynk Support Forum: Coming Soon
+ *      
+ **************************************************************/
+
 //#define BLYNK_DEBUG
 #define BLYNK_PRINT Serial
 
@@ -5,7 +21,7 @@
 #include <ESP8266WiFi.h>
 #include <BlynkSimpleEsp8266.h>
 #include <SimpleTimer.h>
-#include "settings.h"
+#include "settings_base.h"
 
 SimpleTimer timer;
 WidgetBridge sensor1(vPIN_SENS1_BRIDGE);
