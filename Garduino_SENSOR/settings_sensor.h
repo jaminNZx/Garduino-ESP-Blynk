@@ -1,7 +1,7 @@
 /**************************************************************
-
-                           Settings
-
+ *
+ *                  Settings - Sensor
+ *
  **************************************************************/
 /*
     !!!IMPORTANT!!! Select which sensor this sketch is uploaded to!!
@@ -29,18 +29,21 @@
 */
 #define WIFI_SSID               "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
 #define WIFI_PASS               "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+/*
+   Over The Air Hostname
+*/
 #define OTA_HOSTNAME            "GARDUINO-SENSOR-" + SENSOR
 /*
    Local Server Settings
 */
-#define USE_LOCAL_SERVER       
+//#define USE_LOCAL_SERVER       
 #define SERVER                  IPAddress(192, 168, 1, 2)
 /*
    Sensor Labels
 */
 #define LABEL_SENSOR1           "VEGE GARDEN" 
-#define LABEL_SENSOR2           "FENCE GARDEN"
-#define LABEL_SENSOR3           "POTTED PLANTS"
+#define LABEL_SENSOR2           "BACKYARD GARDEN"
+#define LABEL_SENSOR3           "POT PLANTS"
 /*
    Virtual Pins - Base
 */
