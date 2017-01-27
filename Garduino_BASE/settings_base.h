@@ -6,15 +6,15 @@
 /*
      Blynk Auth Codes
 */
-#define AUTH_BASE               "d8a785e101d74d5696a13c8fe597c981"
-#define AUTH_SENSOR1            "6e17b587a36c4892911267bdcc7062ce"
-#define AUTH_SENSOR2            "420ff5509d974a218ba945fea719d945"
-#define AUTH_SENSOR3            "b6cf9b61c05f4a7aac99bc62b3109459"
+#define AUTH_BASE               "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+#define AUTH_SENSOR1            "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+#define AUTH_SENSOR2            "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+#define AUTH_SENSOR3            "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
 /*
    Wifi Credentials
 */
-#define WIFI_SSID               "PrettyFlyForAWiFi"
-#define WIFI_PASS               "custom2015"
+#define WIFI_SSID               "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+#define WIFI_PASS               "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
 /*
    Over The Air Hostname
 */
