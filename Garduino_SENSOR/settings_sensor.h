@@ -56,10 +56,13 @@
 #if   (SENSOR == 1)
   #define AUTH_SENSOR           AUTH_SENSOR1
   #define LABEL_SENSOR          LABEL_SENSOR1
+  #define vPIN_MOISTURE         vPIN_MOISTURE1
 #elif (SENSOR == 2)
   #define AUTH_SENSOR           AUTH_SENSOR2
   #define LABEL_SENSOR          LABEL_SENSOR2
+  #define vPIN_MOISTURE         vPIN_MOISTURE2
 #elif (SENSOR == 3)
   #define AUTH_SENSOR           AUTH_SENSOR3
   #define LABEL_SENSOR          LABEL_SENSOR3
+  #define vPIN_MOISTURE         vPIN_MOISTURE3
 #endif
