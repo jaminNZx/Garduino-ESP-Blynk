@@ -13,11 +13,8 @@
  *      Official Blynk Support Forum: Coming Soon
  *      
  **************************************************************/
-/*
-     Blynk Auth Codes
-*/
 //#define BLYNK_DEBUG
-//#define BLYNK_PRINT Serial
+#define BLYNK_PRINT Serial
 
 #include <ArduinoOTA.h>
 #include <ESP8266WiFi.h>
