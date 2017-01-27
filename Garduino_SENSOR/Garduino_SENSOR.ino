@@ -8,7 +8,7 @@
  *      
  *      Github: https://github.com/jaminNZx/Garduino-ESP-Blynk
  *
- *      Written by: Ben Selkirk (JaminNZx) jamminx@gmail.com
+ *      Written by: Ben Selkirk (JaminNZx)
  *      
  *      Official Blynk Support Forum: Coming Soon
  *      
