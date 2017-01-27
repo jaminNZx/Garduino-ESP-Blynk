@@ -28,12 +28,11 @@ WidgetBridge sensor1(vPIN_SENS1_BRIDGE);
 WidgetBridge sensor2(vPIN_SENS2_BRIDGE);
 WidgetBridge sensor3(vPIN_SENS3_BRIDGE);
 WidgetTerminal terminal(vPIN_TERMINAL);
-
+/*
+   GLOBAL VARIABLES
+*/
 int tap1_threshold_value = 10, tap2_threshold_value = 10, tap3_threshold_value = 10;
 int tap1_timeout_value = 60000,   tap2_timeout_value = 60000,   tap3_timeout_value = 60000;
-int StateTAP1, StateTAP2, StateTAP3, StateTAP4;
-int StateTAP1prev, StateTAP2prev, StateTAP3prev, StateTAP4prev;
-
 byte sensorInterrupt = 4;
 float calibrationFactor = 4.5;
 volatile byte pulseCount = 0;
@@ -41,7 +40,9 @@ float flowRate = 0.00;
 unsigned int flowMilliLitres = 0;
 unsigned long totalMilliLitres = 0;
 unsigned long oldTime = 0;
-
+/*
+   OUTPUT TO CONSOLE FUNCTION
+*/
 void printTask(String a, String b) {
   Serial.print(a + String("="));
   Serial.println(b);
@@ -49,57 +50,29 @@ void printTask(String a, String b) {
   terminal.println(b);
   terminal.flush();
 }
-
+/*
+   BLYNK BRIDGE
+*/
 BLYNK_CONNECTED() {
   sensor1.setAuthToken(AUTH_SENSOR1);
   sensor2.setAuthToken(AUTH_SENSOR2);
   sensor3.setAuthToken(AUTH_SENSOR3);
 }
-
-BLYNK_WRITE(vPIN_MOISTURE1) {
-  int moisture1 = param.asInt();
-  printTask("SENSOR1", String(moisture1));
-
-  if (moisture1 <= tap1_threshold_value && digitalRead(TAP1)) {
-    TAP1_On();
-    timer.setTimeout(tap1_timeout_value, TAP1_Off);
-  }
-}
-
-BLYNK_WRITE(vPIN_MOISTURE2) {
-  int moisture2 = param.asInt();
-  printTask("SENSOR2", String(moisture2));
-
-  if (moisture2 <= tap2_threshold_value && digitalRead(TAP2)) {
-    TAP2_On();
-    timer.setTimeout(tap2_timeout_value, TAP2_Off);
-  }
-}
-
-BLYNK_WRITE(vPIN_MOISTURE3) {
-  int moisture3 = param.asInt();
-  printTask("SENSOR3", String(moisture3));
-
-  if (moisture3 <= tap3_threshold_value && digitalRead(TAP3)) {
-    TAP3_On();
-    timer.setTimeout(tap3_timeout_value, TAP3_Off);
-  }
-}
-
+/*
+   TAP CONTROL
+*/
 void TAP1_On() {
   digitalWrite(TAP1, LOW);
   Blynk.virtualWrite(vPIN_TAP1_LED, 255);
   Blynk.virtualWrite(vPIN_TAP1_MANUAL, 1);
   printTask("TAP1", "ON");
 }
-
 void TAP1_Off() {
   digitalWrite(TAP1, HIGH);
   Blynk.virtualWrite(vPIN_TAP1_LED, 0);
   Blynk.virtualWrite(vPIN_TAP1_MANUAL, 0);
   printTask("TAP1", "OFF");
 }
-
 void TAP1_Toggle() {
   if (digitalRead(TAP1)) {
     TAP1_On();
@@ -114,14 +87,12 @@ void TAP2_On() {
   Blynk.virtualWrite(vPIN_TAP2_MANUAL, 1);
   printTask("TAP2", "ON");
 }
-
 void TAP2_Off() {
   digitalWrite(TAP2, HIGH);
   Blynk.virtualWrite(vPIN_TAP2_LED, 0);
   Blynk.virtualWrite(vPIN_TAP2_MANUAL, 0);
   printTask("TAP2", "OFF");
 }
-
 void TAP2_Toggle() {
   if (digitalRead(TAP2)) {
     TAP2_On();
@@ -136,14 +107,12 @@ void TAP3_On() {
   Blynk.virtualWrite(vPIN_TAP3_MANUAL, 1);
   printTask("TAP3", "ON");
 }
-
 void TAP3_Off() {
   digitalWrite(TAP3, HIGH);
   Blynk.virtualWrite(vPIN_TAP3_LED, 0);
   Blynk.virtualWrite(vPIN_TAP3_MANUAL, 0);
   printTask("TAP3", "OFF");
 }
-
 void TAP3_Toggle() {
   if (digitalRead(TAP3)) {
     TAP3_On();
@@ -158,14 +127,12 @@ void TAP4_On() {
   Blynk.virtualWrite(vPIN_TAP4_MANUAL, 1);
   printTask("TAP4", "ON");
 }
-
 void TAP4_Off() {
   digitalWrite(TAP4, HIGH);
   Blynk.virtualWrite(vPIN_TAP4_LED, 0);
   Blynk.virtualWrite(vPIN_TAP4_MANUAL, 0);
   printTask("TAP4", "OFF");
 }
-
 void TAP4_Toggle() {
   if (digitalRead(TAP4)) {
     TAP4_On();
@@ -173,7 +140,9 @@ void TAP4_Toggle() {
     TAP4_Off();
   }
 }
-
+/*
+   BLYNK WRITES
+*/
 BLYNK_WRITE(vPIN_TAP1_THRESHOLD) {
   tap1_threshold_value = param.asInt();
   printTask("TAP1 THRESHOLD", String(tap1_threshold_value));
@@ -213,8 +182,36 @@ BLYNK_WRITE(vPIN_TAP4_MANUAL) {
   TAP4_Toggle();
 }
 
+BLYNK_WRITE(vPIN_MOISTURE1) {
+  int moisture1 = param.asInt();
+  printTask("SENSOR1", String(moisture1));
 
+  if (moisture1 <= tap1_threshold_value && digitalRead(TAP1)) {
+    TAP1_On();
+    timer.setTimeout(tap1_timeout_value, TAP1_Off);
+  }
+}
+BLYNK_WRITE(vPIN_MOISTURE2) {
+  int moisture2 = param.asInt();
+  printTask("SENSOR2", String(moisture2));
 
+  if (moisture2 <= tap2_threshold_value && digitalRead(TAP2)) {
+    TAP2_On();
+    timer.setTimeout(tap2_timeout_value, TAP2_Off);
+  }
+}
+BLYNK_WRITE(vPIN_MOISTURE3) {
+  int moisture3 = param.asInt();
+  printTask("SENSOR3", String(moisture3));
+
+  if (moisture3 <= tap3_threshold_value && digitalRead(TAP3)) {
+    TAP3_On();
+    timer.setTimeout(tap3_timeout_value, TAP3_Off);
+  }
+}
+/*
+   TERMINAL I/O
+*/
 BLYNK_WRITE(vPIN_TERMINAL) {
   if (String("sync tap1") == param.asStr()) {
     terminal.println("SYNCING TAP1");
@@ -240,12 +237,14 @@ BLYNK_WRITE(vPIN_TERMINAL) {
   }
   terminal.flush();
 }
-
+/*
+   FLOW SENSOR FUNCTIONS
+*/
 void GetFlowSensorData() {
   detachInterrupt(sensorInterrupt);
-  flowRate = ((1000.0 / (millis() - oldTime)) * pulseCount) / calibrationFactor;
-  oldTime = millis();
-  //flowRate = pulseCount / calibrationFactor;
+  //flowRate = ((1000.0 / (millis() - oldTime)) * pulseCount) / calibrationFactor;
+  //oldTime = millis();
+  flowRate = pulseCount / calibrationFactor;
   flowMilliLitres = (flowRate / 60) * 1000;
   totalMilliLitres += flowMilliLitres;
   unsigned int frac;
@@ -255,17 +254,17 @@ void GetFlowSensorData() {
   Blynk.virtualWrite(vPIN_WATER_TOTAL, (float)totalMilliLitres / 1000);
   Blynk.virtualWrite(vPIN_WATER_FLOW, (float)flowMilliLitres / 1000);
 }
-
 void pulseCounter() {
   pulseCount++;
 }
-
 void ShowFlowSensorData() {
   printTask("WATER LITRES", String((float)totalMilliLitres / 1000)));
 }
-
+/*
+   SETUP
+*/
 void setup() {
-  // PINMODS
+  // PINMODES
   pinMode(TAP1, OUTPUT);
   pinMode(TAP2, OUTPUT);
   pinMode(TAP3, OUTPUT);
@@ -275,35 +274,42 @@ void setup() {
   digitalWrite(TAP2, HIGH);
   digitalWrite(TAP3, HIGH);
   digitalWrite(TAP4, HIGH);
-  // Set up Flow Meter
+  // FLOW METER
   pulseCount        = 0;
   flowRate          = 0.0;
   flowMilliLitres   = 0;
   totalMilliLitres  = 0;
   oldTime           = 0;
   attachInterrupt(sensorInterrupt, pulseCounter, FALLING);
-
+  // COMMUNICATIONS
   Serial.begin(115200);
   WiFi.mode(WIFI_STA);
-#if defined(USE_LOCAL_SERVER)
-  Blynk.begin(AUTH_BASE, WIFI_SSID, WIFI_PASS, SERVER);
-#else
-  Blynk.begin(AUTH_BASE, WIFI_SSID, WIFI_PASS);
-#endif
+  // CONNECT TO BLYNK
+  #if defined(USE_LOCAL_SERVER)
+    Blynk.begin(AUTH_BASE, WIFI_SSID, WIFI_PASS, SERVER);
+  #else
+    Blynk.begin(AUTH_BASE, WIFI_SSID, WIFI_PASS);
+  #endif
   while (Blynk.connect() == false) {}
+  // OVER THE AIR UPDATES
   ArduinoOTA.setHostname(OTA_HOSTNAME);
   ArduinoOTA.begin();
-
+  // TIMERS
   timer.setInterval(1000L, GetFlowSensorData);
   timer.setInterval(30000L, ShowFlowSensorData);
-
+  // DONE
   Serial.println(F("Blynk v" BLYNK_VERSION ": Device started"));
   terminal.println(F("Blynk v" BLYNK_VERSION ": Device started"));
   terminal.flush();
 }
-
+/*
+   LOOP
+*/
 void loop() {
   Blynk.run();
   ArduinoOTA.handle();
   timer.run();
 }
+/*
+   
+*/

@@ -15,7 +15,7 @@
  **************************************************************/
 
 //#define BLYNK_DEBUG
-#define BLYNK_PRINT Serial
+//#define BLYNK_PRINT Serial
 
 #include <ArduinoOTA.h>
 #include <ESP8266WiFi.h>
@@ -26,8 +26,7 @@
 SimpleTimer timer;
 WidgetBridge base(vPIN_BASE_BRIDGE);
 
-bool noSleep;
-int timer1, timer2;
+int noSleep, timer1, timer2;
 
 void updateMoisture() {
   //int moistureSensor = analogRead(A0);
@@ -36,7 +35,7 @@ void updateMoisture() {
   Serial.print("SENSOR=");
   Serial.println(moistureSensor);
   Blynk.virtualWrite(vPIN_MOISTURE, moistureSensor ); // update dash page with data
-  base.virtualWrite(vPIN_MOISTURE1, moistureSensor); // update BASE with data
+  base.virtualWrite(vPIN_MOISTURE_BASE, moistureSensor); // update BASE with data
 }
 
 BLYNK_WRITE(vPIN_BUTTON_NOSLEEP) {

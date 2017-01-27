@@ -22,10 +22,6 @@
 #define WIFI_SSID               "PrettyFlyForAWiFi"
 #define WIFI_PASS               "custom2015"
 /*
-   Over The Air Hostname
-*/
-#define OTA_HOSTNAME            "GARDUINO-SENSOR-" + SENSOR
-/*
    Local Server Settings
 */
 #define USE_LOCAL_SERVER       
@@ -56,13 +52,19 @@
 #if   (SENSOR == 1)
   #define AUTH_SENSOR           AUTH_SENSOR1
   #define LABEL_SENSOR          LABEL_SENSOR1
-  #define vPIN_MOISTURE         vPIN_MOISTURE1
+  #define vPIN_MOISTURE_BASE    vPIN_MOISTURE1
+  #define OTA_HOSTNAME          "GARDUINO-SENSOR-1"
 #elif (SENSOR == 2)
   #define AUTH_SENSOR           AUTH_SENSOR2
   #define LABEL_SENSOR          LABEL_SENSOR2
-  #define vPIN_MOISTURE         vPIN_MOISTURE2
+  #define vPIN_MOISTURE_BASE    vPIN_MOISTURE2
+  #define OTA_HOSTNAME          "GARDUINO-SENSOR-2"
 #elif (SENSOR == 3)
   #define AUTH_SENSOR           AUTH_SENSOR3
   #define LABEL_SENSOR          LABEL_SENSOR3
-  #define vPIN_MOISTURE         vPIN_MOISTURE3
+  #define vPIN_MOISTURE_BASE    vPIN_MOISTURE3
+  #define OTA_HOSTNAME          "GARDUINO-SENSOR-3"
 #endif
+/*
+   
+*/
