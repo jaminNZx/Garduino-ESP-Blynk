@@ -4,7 +4,7 @@
  *
  **************************************************************/
 /*
-    !!!IMPORTANT!!! Select which sensor this sketch is uploaded to!!
+  !!!IMPORTANT!!! Select which sensor this sketch will act as!!
 */
 #define SENSOR  1
 //#define SENSOR  2
