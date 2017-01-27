@@ -27,6 +27,7 @@
 /*
    Console Output (Debug/Log)
 */
+#define OUTPUT_SERIAL
 #define OUTPUT_TERMINAL
 /*
    Hardware Pins
