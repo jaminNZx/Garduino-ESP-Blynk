@@ -4,7 +4,10 @@
  *
  **************************************************************/
 /*
-   Auth Codes & Wifi info go in the following file
+   Auth Codes & Wifi info go in the following file.
+   Create a new folder in your library dir called 'private_credentials_garduino'
+   and create a new file called 'private_credentials_garduino.h' and copy the 
+   example in the repo.
 */
 #include <private_credentials_garduino.h>
 /*
