@@ -4,17 +4,9 @@
  *
  **************************************************************/
 /*
-     Blynk Auth Codes
+   Auth Codes & Wifi info go in the following file
 */
-#define AUTH_BASE               "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
-#define AUTH_SENSOR1            "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
-#define AUTH_SENSOR2            "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
-#define AUTH_SENSOR3            "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
-/*
-   Wifi Credentials
-*/
-#define WIFI_SSID               "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
-#define WIFI_PASS               "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+#include <private_credentials_garduino.h>
 /*
    Over The Air Hostname
 */
