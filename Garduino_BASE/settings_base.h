@@ -37,7 +37,7 @@
 #define TAP3                    13 // D7
 #define TAP4                    2  // D4
 /*
-   Flow Pin and Calibration factor
+   Flow Meter Pin and Calibration factor
 */
 #define FLOW_SENSOR             4  // D2
 #define FLOW_CALIBRATION        4.5
@@ -72,6 +72,12 @@
 
 #define vPIN_WATER_TOTAL        V25
 #define vPIN_WATER_FLOW         V26
+
+#define vPIN_WATER_TAP1         V27
+#define vPIN_WATER_TAP2         V28
+#define vPIN_WATER_TAP3         V29
+#define vPIN_WATER_TAP4         V30
+
 
 #define vPIN_TERMINAL           V31
 /*

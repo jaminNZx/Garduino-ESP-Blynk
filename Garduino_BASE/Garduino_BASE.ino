@@ -33,7 +33,8 @@ WidgetTerminal terminal(vPIN_TERMINAL);
 */
 int tap1_threshold_value = 10, tap2_threshold_value = 10, tap3_threshold_value = 10;
 int tap1_timeout_value = 60000,   tap2_timeout_value = 60000,   tap3_timeout_value = 60000;
-
+int activeTAPs = 0;
+int flowMilliLitresSplit, totalMilliLitres1, totalMilliLitres2, totalMilliLitres3, totalMilliLitres4;
 
 volatile byte pulseCount = 0;
 float flowRate = 0.00;
@@ -68,11 +69,13 @@ BLYNK_CONNECTED() {
 void TAP1_On() {
   digitalWrite(TAP1, LOW);
   Blynk.virtualWrite(vPIN_TAP1_LED, 255);
+  activeTAPs++;
   printTask("TAP1", "ON");
 }
 void TAP1_Off() {
   digitalWrite(TAP1, HIGH);
   Blynk.virtualWrite(vPIN_TAP1_LED, 0);
+  activeTAPs--;
   printTask("TAP1", "OFF");
 }
 void TAP1_Toggle() {
@@ -86,11 +89,13 @@ void TAP1_Toggle() {
 void TAP2_On() {
   digitalWrite(TAP2, LOW);
   Blynk.virtualWrite(vPIN_TAP2_LED, 255);
+  activeTAPs++;
   printTask("TAP2", "ON");
 }
 void TAP2_Off() {
   digitalWrite(TAP2, HIGH);
   Blynk.virtualWrite(vPIN_TAP2_LED, 0);
+  activeTAPs--;
   printTask("TAP2", "OFF");
 }
 void TAP2_Toggle() {
@@ -104,11 +109,13 @@ void TAP2_Toggle() {
 void TAP3_On() {
   digitalWrite(TAP3, LOW);
   Blynk.virtualWrite(vPIN_TAP3_LED, 255);
+  activeTAPs++;
   printTask("TAP3", "ON");
 }
 void TAP3_Off() {
   digitalWrite(TAP3, HIGH);
   Blynk.virtualWrite(vPIN_TAP3_LED, 0);
+  activeTAPs--;
   printTask("TAP3", "OFF");
 }
 void TAP3_Toggle() {
@@ -122,11 +129,13 @@ void TAP3_Toggle() {
 void TAP4_On() {
   digitalWrite(TAP4, LOW);
   Blynk.virtualWrite(vPIN_TAP4_LED, 255);
+  activeTAPs++;
   printTask("TAP4", "ON");
 }
 void TAP4_Off() {
   digitalWrite(TAP4, HIGH);
   Blynk.virtualWrite(vPIN_TAP4_LED, 0);
+  activeTAPs--;
   printTask("TAP4", "OFF");
 }
 void TAP4_Toggle() {
@@ -182,7 +191,6 @@ BLYNK_WRITE(vPIN_TAP3_MANUAL) {
 }
 BLYNK_WRITE(vPIN_TAP4_MANUAL) {
   if (param.asInt()) {
-
     TAP4_Toggle();
   }
 }
@@ -246,18 +254,43 @@ BLYNK_WRITE(vPIN_TERMINAL) {
    FLOW SENSOR FUNCTIONS
 */
 void GetFlowSensorData() {
+
   detachInterrupt(FLOW_SENSOR);
   //flowRate = ((1000.0 / (millis() - oldTime)) * pulseCount) / FLOW_CALIBRATION;
   //oldTime = millis();
   flowRate = pulseCount / FLOW_CALIBRATION;
   pulseCount = 0;
   attachInterrupt(FLOW_SENSOR, pulseCounter, FALLING);
+  //calc totals
   flowMilliLitres = (flowRate / 60) * 1000;
   totalMilliLitres += flowMilliLitres;
+  //calc totals of running tap, or if more than 1, split flow evenly
+  if (activeTAPs > 0) {
+    flowMilliLitresSplit = flowMilliLitres / activeTAPs;
+    if (!digitalRead(TAP1)) {
+      totalMilliLitres1 += flowMilliLitresSplit;
+    }
+    if (!digitalRead(TAP2)) {
+      totalMilliLitres2 += flowMilliLitresSplit;
+    }
+    if (!digitalRead(TAP3)) {
+      totalMilliLitres3 += flowMilliLitresSplit;
+    }
+    if (!digitalRead(TAP4)) {
+      totalMilliLitres4 += flowMilliLitresSplit;
+    }
+  }
+
   unsigned int frac;
   frac = (flowRate - int(flowRate)) * 10;
+  //Blynk.virtualWrite(29, frac);
   Blynk.virtualWrite(vPIN_WATER_TOTAL, (float)totalMilliLitres / 1000);
-  Blynk.virtualWrite(vPIN_WATER_FLOW, (float)flowMilliLitres / 1000);
+  Blynk.virtualWrite(vPIN_WATER_FLOW,  (float)flowMilliLitres / 1000);
+
+  Blynk.virtualWrite(vPIN_WATER_TAP1, (float)totalMilliLitres1 / 1000);
+  Blynk.virtualWrite(vPIN_WATER_TAP2, (float)totalMilliLitres2 / 1000);
+  Blynk.virtualWrite(vPIN_WATER_TAP3, (float)totalMilliLitres3 / 1000);
+  Blynk.virtualWrite(vPIN_WATER_TAP4, (float)totalMilliLitres4 / 1000);
 }
 void pulseCounter() {
   pulseCount++;
