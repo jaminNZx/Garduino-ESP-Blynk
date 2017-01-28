@@ -34,8 +34,7 @@ WidgetTerminal terminal(vPIN_TERMINAL);
 int tap1_threshold_value = 10, tap2_threshold_value = 10, tap3_threshold_value = 10;
 int tap1_timeout_value = 60000,   tap2_timeout_value = 60000,   tap3_timeout_value = 60000;
 
-byte sensorInterrupt = 4;
-float calibrationFactor = 4.5;
+
 volatile byte pulseCount = 0;
 float flowRate = 0.00;
 unsigned int flowMilliLitres = 0;
@@ -246,16 +245,16 @@ BLYNK_WRITE(vPIN_TERMINAL) {
    FLOW SENSOR FUNCTIONS
 */
 void GetFlowSensorData() {
-  detachInterrupt(sensorInterrupt);
-  //flowRate = ((1000.0 / (millis() - oldTime)) * pulseCount) / calibrationFactor;
+  detachInterrupt(FLOW_SENSOR);
+  //flowRate = ((1000.0 / (millis() - oldTime)) * pulseCount) / FLOW_CALIBRATION;
   //oldTime = millis();
-  flowRate = pulseCount / calibrationFactor;
+  flowRate = pulseCount / FLOW_CALIBRATION;
   flowMilliLitres = (flowRate / 60) * 1000;
   totalMilliLitres += flowMilliLitres;
   unsigned int frac;
   frac = (flowRate - int(flowRate)) * 10;
   pulseCount = 0;
-  attachInterrupt(sensorInterrupt, pulseCounter, FALLING);
+  attachInterrupt(FLOW_SENSOR, pulseCounter, FALLING);
   Blynk.virtualWrite(vPIN_WATER_TOTAL, (float)totalMilliLitres / 1000);
   Blynk.virtualWrite(vPIN_WATER_FLOW, (float)flowMilliLitres / 1000);
 }
@@ -285,16 +284,16 @@ void setup() {
   flowMilliLitres   = 0;
   totalMilliLitres  = 0;
   oldTime           = 0;
-  attachInterrupt(sensorInterrupt, pulseCounter, FALLING);
+  attachInterrupt(FLOW_SENSOR, pulseCounter, FALLING);
   // COMMUNICATIONS
   Serial.begin(115200);
   WiFi.mode(WIFI_STA);
   // CONNECT TO BLYNK
-  #if defined(USE_LOCAL_SERVER)
-    Blynk.begin(AUTH_BASE, WIFI_SSID, WIFI_PASS, SERVER);
-  #else
-    Blynk.begin(AUTH_BASE, WIFI_SSID, WIFI_PASS);
-  #endif
+#if defined(USE_LOCAL_SERVER)
+  Blynk.begin(AUTH_BASE, WIFI_SSID, WIFI_PASS, SERVER);
+#else
+  Blynk.begin(AUTH_BASE, WIFI_SSID, WIFI_PASS);
+#endif
   while (Blynk.connect() == false) {}
   // OVER THE AIR UPDATES
   ArduinoOTA.setHostname(OTA_HOSTNAME);
