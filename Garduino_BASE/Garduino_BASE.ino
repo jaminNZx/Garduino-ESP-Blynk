@@ -250,12 +250,12 @@ void GetFlowSensorData() {
   //flowRate = ((1000.0 / (millis() - oldTime)) * pulseCount) / FLOW_CALIBRATION;
   //oldTime = millis();
   flowRate = pulseCount / FLOW_CALIBRATION;
+  pulseCount = 0;
+  attachInterrupt(FLOW_SENSOR, pulseCounter, FALLING);
   flowMilliLitres = (flowRate / 60) * 1000;
   totalMilliLitres += flowMilliLitres;
   unsigned int frac;
   frac = (flowRate - int(flowRate)) * 10;
-  pulseCount = 0;
-  attachInterrupt(FLOW_SENSOR, pulseCounter, FALLING);
   Blynk.virtualWrite(vPIN_WATER_TOTAL, (float)totalMilliLitres / 1000);
   Blynk.virtualWrite(vPIN_WATER_FLOW, (float)flowMilliLitres / 1000);
 }
