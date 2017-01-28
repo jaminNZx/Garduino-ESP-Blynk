@@ -264,33 +264,32 @@ void GetFlowSensorData() {
   //calc totals
   flowMilliLitres = (flowRate / 60) * 1000;
   totalMilliLitres += flowMilliLitres;
-  //calc totals of running tap, or if more than 1, split flow evenly
+  Blynk.virtualWrite(vPIN_WATER_TOTAL, (float)totalMilliLitres / 1000);
+  Blynk.virtualWrite(vPIN_WATER_FLOW,  (float)flowMilliLitres / 1000);
   if (activeTAPs > 0) {
     flowMilliLitresSplit = flowMilliLitres / activeTAPs;
     if (!digitalRead(TAP1)) {
       totalMilliLitres1 += flowMilliLitresSplit;
+      Blynk.virtualWrite(vPIN_WATER_TAP1, (float)totalMilliLitres1 / 1000);
     }
     if (!digitalRead(TAP2)) {
       totalMilliLitres2 += flowMilliLitresSplit;
+      Blynk.virtualWrite(vPIN_WATER_TAP2, (float)totalMilliLitres2 / 1000);
     }
     if (!digitalRead(TAP3)) {
       totalMilliLitres3 += flowMilliLitresSplit;
+      Blynk.virtualWrite(vPIN_WATER_TAP3, (float)totalMilliLitres3 / 1000);
     }
     if (!digitalRead(TAP4)) {
       totalMilliLitres4 += flowMilliLitresSplit;
+      Blynk.virtualWrite(vPIN_WATER_TAP4, (float)totalMilliLitres4 / 1000);
     }
   }
 
-  unsigned int frac;
-  frac = (flowRate - int(flowRate)) * 10;
+  // old function
+  //unsigned int frac;
+  //frac = (flowRate - int(flowRate)) * 10;
   //Blynk.virtualWrite(29, frac);
-  Blynk.virtualWrite(vPIN_WATER_TOTAL, (float)totalMilliLitres / 1000);
-  Blynk.virtualWrite(vPIN_WATER_FLOW,  (float)flowMilliLitres / 1000);
-
-  Blynk.virtualWrite(vPIN_WATER_TAP1, (float)totalMilliLitres1 / 1000);
-  Blynk.virtualWrite(vPIN_WATER_TAP2, (float)totalMilliLitres2 / 1000);
-  Blynk.virtualWrite(vPIN_WATER_TAP3, (float)totalMilliLitres3 / 1000);
-  Blynk.virtualWrite(vPIN_WATER_TAP4, (float)totalMilliLitres4 / 1000);
 }
 void pulseCounter() {
   pulseCount++;
