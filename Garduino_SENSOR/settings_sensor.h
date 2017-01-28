@@ -10,17 +10,12 @@
 //#define SENSOR  2
 //#define SENSOR  3
 /*
-     Blynk Auth Codes
+   Auth Codes & Wifi info go in the following file.
+   Create a new folder in your library dir called 'private_credentials_garduino'
+   and create a new file called 'private_credentials_garduino.h' and copy the 
+   example in the repo.
 */
-#define AUTH_BASE               "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
-#define AUTH_SENSOR1            "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
-#define AUTH_SENSOR2            "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
-#define AUTH_SENSOR3            "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
-/*
-   Wifi Credentials
-*/
-#define WIFI_SSID               "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
-#define WIFI_PASS               "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+#include <private_credentials_garduino.h>
 /*
    Local Server Settings
 */
