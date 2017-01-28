@@ -68,13 +68,11 @@ BLYNK_CONNECTED() {
 void TAP1_On() {
   digitalWrite(TAP1, LOW);
   Blynk.virtualWrite(vPIN_TAP1_LED, 255);
-  Blynk.virtualWrite(vPIN_TAP1_MANUAL, 1);
   printTask("TAP1", "ON");
 }
 void TAP1_Off() {
   digitalWrite(TAP1, HIGH);
   Blynk.virtualWrite(vPIN_TAP1_LED, 0);
-  Blynk.virtualWrite(vPIN_TAP1_MANUAL, 0);
   printTask("TAP1", "OFF");
 }
 void TAP1_Toggle() {
@@ -88,13 +86,11 @@ void TAP1_Toggle() {
 void TAP2_On() {
   digitalWrite(TAP2, LOW);
   Blynk.virtualWrite(vPIN_TAP2_LED, 255);
-  Blynk.virtualWrite(vPIN_TAP2_MANUAL, 1);
   printTask("TAP2", "ON");
 }
 void TAP2_Off() {
   digitalWrite(TAP2, HIGH);
   Blynk.virtualWrite(vPIN_TAP2_LED, 0);
-  Blynk.virtualWrite(vPIN_TAP2_MANUAL, 0);
   printTask("TAP2", "OFF");
 }
 void TAP2_Toggle() {
@@ -108,13 +104,11 @@ void TAP2_Toggle() {
 void TAP3_On() {
   digitalWrite(TAP3, LOW);
   Blynk.virtualWrite(vPIN_TAP3_LED, 255);
-  Blynk.virtualWrite(vPIN_TAP3_MANUAL, 1);
   printTask("TAP3", "ON");
 }
 void TAP3_Off() {
   digitalWrite(TAP3, HIGH);
   Blynk.virtualWrite(vPIN_TAP3_LED, 0);
-  Blynk.virtualWrite(vPIN_TAP3_MANUAL, 0);
   printTask("TAP3", "OFF");
 }
 void TAP3_Toggle() {
@@ -128,13 +122,11 @@ void TAP3_Toggle() {
 void TAP4_On() {
   digitalWrite(TAP4, LOW);
   Blynk.virtualWrite(vPIN_TAP4_LED, 255);
-  Blynk.virtualWrite(vPIN_TAP4_MANUAL, 1);
   printTask("TAP4", "ON");
 }
 void TAP4_Off() {
   digitalWrite(TAP4, HIGH);
   Blynk.virtualWrite(vPIN_TAP4_LED, 0);
-  Blynk.virtualWrite(vPIN_TAP4_MANUAL, 0);
   printTask("TAP4", "OFF");
 }
 void TAP4_Toggle() {
@@ -174,16 +166,25 @@ BLYNK_WRITE(vPIN_TAP3_TIMEOUT) {
 }
 
 BLYNK_WRITE(vPIN_TAP1_MANUAL) {
-  TAP1_Toggle();
+  if (param.asInt()) {
+    TAP1_Toggle();
+  }
 }
 BLYNK_WRITE(vPIN_TAP2_MANUAL) {
-  TAP2_Toggle();
+  if (param.asInt()) {
+    TAP2_Toggle();
+  }
 }
 BLYNK_WRITE(vPIN_TAP3_MANUAL) {
-  TAP3_Toggle();
+  if (param.asInt()) {
+    TAP3_Toggle();
+  }
 }
 BLYNK_WRITE(vPIN_TAP4_MANUAL) {
-  TAP4_Toggle();
+  if (param.asInt()) {
+
+    TAP4_Toggle();
+  }
 }
 
 BLYNK_WRITE(vPIN_MOISTURE1) {
