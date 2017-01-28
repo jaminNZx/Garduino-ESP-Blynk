@@ -35,7 +35,12 @@
 #define TAP1                    14 // D5
 #define TAP2                    12 // D6
 #define TAP3                    13 // D7
-#define TAP4                    15 // D2
+#define TAP4                    2  // D4
+/*
+   Flow Pin and Calibration factor
+*/
+#define FLOW_SENSOR             4  // D2
+#define FLOW_CALIBRATION        4.5
 /*
    Virtual Pins - Base
 */
