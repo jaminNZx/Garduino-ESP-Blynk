@@ -14,6 +14,25 @@ Software:
 
 * Load up the INO sketches and match the pinouts from the code. 
 * Download the Blynk mobile app and create a project, add your base and 3 sensors as devices and email yourself the auth codes and put them in the sketchs.
+* Create a new folder in your library dir called 'private_credentials_garduino' and create a new file called 'private_credentials_garduino.h' and copy the example below:
+
+```cpp
+/**************************************************************
+ *           Settings - Global Private Credentials
+ **************************************************************/
+/*
+     Blynk Auth Codes
+*/
+#define AUTH_BASE               "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+#define AUTH_SENSOR1            "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+#define AUTH_SENSOR2            "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+#define AUTH_SENSOR3            "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+/*
+   Wifi Credentials
+*/
+#define WIFI_SSID               "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+#define WIFI_PASS               "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+```
 
 Gallery:
 
