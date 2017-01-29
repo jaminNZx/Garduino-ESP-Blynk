@@ -15,7 +15,7 @@
    and create a new file called 'private_credentials_garduino.h' and copy the 
    example in the repo.
 */
-#include <private_credentials_garduino.h>
+#include <wifi_credentials.h>
 /*
      Blynk Auth Codes
 */
