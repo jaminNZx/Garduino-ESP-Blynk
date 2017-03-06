@@ -81,7 +81,7 @@ BLYNK_WRITE(vPIN_TAP_MANUAL) {
   }
 }
 BLYNK_WRITE(vPIN_TAP_TIMER) {
-  if (param.asInt()) {
+  if (param.asInt()) { 
     TAP_On();
     printTask("TAP TIMEOUT", String(tap_timeout_value / 1000) + String(" SEC"));
     timer.setTimeout(tap_timeout_value, TAP_Off);
