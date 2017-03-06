@@ -13,7 +13,7 @@
 /*
      Blynk Auth Codes
 */
-#define AUTH                    "0913ee2009cd4fa9b5307e572a0c5028"
+#define AUTH                      "0913ee2009cd4fa9b5307e572a0c5028"
 /*
    Over The Air Hostname
 */
@@ -31,12 +31,16 @@
 /*
    Hardware Pins
 */
-#define TAP                      14 // D5
+#define TAP                       14 // D5
 /*
    Flow Meter Pin and Calibration factor
 */
 #define FLOW_SENSOR               4  // D2
 #define FLOW_CALIBRATION          4.5
+/*
+   Water Cost. Comment out to disable.
+*/
+#define WATER_PRICE               0.00001444 // cents per L. Find it on your water bill.
 /*
    Virtual Pins - Base
 */
@@ -47,6 +51,7 @@
 
 #define vPIN_WATER_TOTAL          V25
 #define vPIN_WATER_FLOW           V26
+#define vPIN_WATER_COST           V28
 
 #define vPIN_WATER_TAP            V27
 

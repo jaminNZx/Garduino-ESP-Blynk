@@ -27,7 +27,7 @@ SimpleTimer timer;
 WidgetTerminal terminal(vPIN_TERMINAL);
 int tap_timeout_value = 60000;
 volatile byte pulseCount = 0;
-float flowRate = 0.00;
+float flowRate = 0.00, waterCost;
 unsigned int flowMilliLitres = 0;
 unsigned long totalMilliLitres = 0;
 unsigned long oldTime = 0;
@@ -59,7 +59,6 @@ void TAP_Off() {
   Blynk.virtualWrite(vPIN_TAP_LED, 0);
   printTask("TAP", "OFF");
   printTask("WATER USED", String((float)totalMilliLitres / 1000));
-  totalMilliLitres = 0;
 }
 void TAP_Toggle() {
   if (digitalRead(TAP)) {
@@ -104,8 +103,12 @@ void pulseCounter() {
   pulseCount++;
 }
 void ShowFlowSensorData() {
-    Blynk.virtualWrite(vPIN_WATER_TOTAL, (float)totalMilliLitres / 1000);
-    Blynk.virtualWrite(vPIN_WATER_FLOW,  (float)flowMilliLitres / 1000);
+  Blynk.virtualWrite(vPIN_WATER_TOTAL, (float)totalMilliLitres / 1000);
+  Blynk.virtualWrite(vPIN_WATER_FLOW,  (float)flowMilliLitres / 1000);
+#ifdef WATER_PRICE
+  waterCost = waterCost + (((float)flowMilliLitres / 1000) * WATER_PRICE);
+  Blynk.virtualWrite(vPIN_WATER_COST, String(waterCost,6));
+#endif
 }
 /*
    SETUP
