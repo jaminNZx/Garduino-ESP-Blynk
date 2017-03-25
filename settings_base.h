@@ -21,8 +21,7 @@
 /*
    Local Server Settings (uncomment to use local server)
 */
-#define USE_LOCAL_SERVER
-#define SERVER                    IPAddress(192, 168, 1, 2)
+#define LOCAL_SERVER              IPAddress(192, 168, 1, 2)
 /*
    Console Output (Debug/Log)
 */
@@ -40,22 +39,30 @@
 /*
    Water Cost. Comment out to disable.
 */
-#define WATER_PRICE               0.00001444 // cents per L. Find it on your water bill.
+#define WATER_PRICE               0.1444 // c/l -- Find it on your water bill. $1.444 /Kl = $0.001444 /l === 0.1444 c/l !
 /*
    Virtual Pins - Base
 */
+#define vPIN_TABLE                V1
+
 #define vPIN_TAP_LED              V7
-#define vPIN_TAP_TIMEOUT          V14
+#define vPIN_TAP_LIMIT            V14
 #define vPIN_TAP_MANUAL           V18
-#define vPIN_TAP_TIMER            V19
+#define vPIN_TAP_ACTIVATE         V19
 
 #define vPIN_WATER_TOTAL          V25
+#define vPIN_WATER_TOTAL_MONTH    V21
 #define vPIN_WATER_FLOW           V26
 #define vPIN_WATER_COST           V28
+#define vPIN_WATER_COST_MONTH     V11
 
 #define vPIN_WATER_TAP            V27
 
 #define vPIN_TERMINAL             V31
+
+#define vPIN_LIMITMENU            V9
+
+#define vPIN_LAST_MONTH           V10
 /*
 
 */
