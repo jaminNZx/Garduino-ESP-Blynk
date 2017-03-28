@@ -30,7 +30,6 @@
 #include "tapControl.h"
 #include "blynk_writes.h"
 
-
 /*
    SETUP
 */
