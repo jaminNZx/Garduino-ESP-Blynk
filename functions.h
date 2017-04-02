@@ -8,23 +8,15 @@
       - return the time as 'HH:MM:SS'
 */
 String getCurrentTime() {
-  extraZeroH = "";
-  extraZeroM = "";
-  extraZeroS = "";
-  if (hour() < 10) {
-    extraZeroH = '0';
-  }
-  if (minute() < 10) {
-    extraZeroM = '0';
-  }
-  if (second() < 10) {
-    extraZeroS = '0';
-  }
+  String extraZeroH = "", extraZeroM = "", extraZeroS = "";
+  if (hour() < 10) extraZeroH = '0';
+  if (minute() < 10) extraZeroM = '0';
+  if (second() < 10) extraZeroS = '0';
   return String(extraZeroH + hour()) + ':' + extraZeroM + minute() + ':' + extraZeroS + second();
 }
 /*
   getCurrentDate() -
-      - return the date as 'DD:MM:YYYY'
+      - return the date as 'DD:MM:YY'
 */
 String getCurrentDate() {
   return String(day()) + '-' + monthShortStr(month()) + '-' + (year() - 2000);
