@@ -13,4 +13,4 @@ volatile byte pulseCount = 0;
 float flowRate = 0.00, waterCost, waterCost_month;
 float flowMilliLitres;
 float totalMilliLitres, totalMilliLitres_month;
-String extraZeroH, extraZeroM, extraZeroS;
+
