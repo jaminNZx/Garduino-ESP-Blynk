@@ -46,13 +46,7 @@ BLYNK_WRITE(vPIN_TAP_MANUAL) {
   Activate button
 */
 BLYNK_WRITE(vPIN_TAP_ACTIVATE) {
-  if (param.asInt()) {
-    if (digitalRead(TAP)) {
-      TAP_On();
-    } else {
-      TAP_Off();
-    }
-  }
+  (param.asInt() && digitalRead(TAP)) ? TAP_On() : TAP_Off();
 }
 /*
   Total water cost month

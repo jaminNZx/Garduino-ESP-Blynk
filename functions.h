@@ -145,11 +145,7 @@ void TAP_On() {
       - Toggles the tap state.
 */
 void TAP_Toggle() {
-  if (digitalRead(TAP)) {
-    TAP_On();
-  } else {
-    TAP_Off();
-  }
+  digitalRead(TAP) ? TAP_On() : TAP_Off();
 }
 
 
