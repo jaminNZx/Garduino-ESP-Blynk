@@ -10,7 +10,8 @@
 
         Written by: Ben Selkirk (JaminNZx)
 
-        Official Blynk Support Forum: Coming Soon
+        Official Blynk Support Forum: 
+        http://community.blynk.cc/t/garduino-the-solar-wifi-sensor-driven-irrigation-system/11150
 
  **************************************************************/
 
@@ -23,11 +24,10 @@
 #include <TimeLib.h>
 #include <WidgetRTC.h>
 #include <SimpleTimer.h>
-#include "settings_base.h"
 
+#include "settings_base.h"
 #include "globals.h"
 #include "functions.h"
-#include "tapControl.h"
 #include "blynk_writes.h"
 
 /*
@@ -62,8 +62,24 @@ void setup() {
   setSyncInterval(5);
   // TIMERS
   timer.setInterval(1000, flowSensor);
-  timer.setInterval(1000, sendUptime);
-  timer2 = timer.setInterval(1000, normalSync);
+  timer.setInterval(1000, []() {
+    Blynk.setProperty(vPIN_TERMINAL, "label", String("WIFI: ") + String(map(WiFi.RSSI(), -105, -40, 0, 100)) + String("% (") + WiFi.RSSI() + String("dB)") + String(" | ") + curDateTime() );
+    if (month() != month_old && year() != 1970) {
+      waterCost_month = 0;
+      totalMilliLitres_month = 0;
+      month_old = month();
+      Blynk.virtualWrite(vPIN_LAST_MONTH, month());
+      Blynk.virtualWrite(vPIN_TABLE, "add", rowIndex, "RESET MONTHLY DATA", " ");
+      rowIndex++;
+    }
+  });
+  timer2 = timer.setInterval(1000, []() {
+    if (year() != 1970) {
+      setSyncInterval(300);
+      printTask("RTC SYNC", "5 MIN");
+      timer.disable(timer2);
+    }
+  });
   // DONE
   Serial.println(F("Blynk v" BLYNK_VERSION ": Device started"));
   terminal.println(F("Blynk v" BLYNK_VERSION ": Device started"));

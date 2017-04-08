@@ -41,7 +41,7 @@
 */
 #define WATER_PRICE               0.1444 // c/l -- Find it on your water bill. $1.444 /Kl = $0.001444 /l === 0.1444 c/l !
 /*
-   Virtual Pins - Base
+   Virtual Pins
 */
 #define vPIN_TABLE                V1
 

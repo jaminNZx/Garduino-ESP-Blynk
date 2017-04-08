@@ -43,32 +43,6 @@ void printTask(String a, String b) {
   terminal.flush();
 #endif
 }
-/*
-  sendUptime() - 
-      - 
-*/
-void sendUptime() {
-  Blynk.setProperty(vPIN_TERMINAL, "label", String("WIFI: ") + String(map(WiFi.RSSI(), -105, -40, 0, 100)) + String("% (") + WiFi.RSSI() + String("dB)") + String(" | ") + curDateTime() );
-  if (month() != month_old && year() != 1970) {
-    waterCost_month = 0;
-    totalMilliLitres_month = 0;
-    month_old = month();
-    Blynk.virtualWrite(vPIN_LAST_MONTH, month());
-    Blynk.virtualWrite(vPIN_TABLE, "add", rowIndex, "RESET MONTHLY DATA", " ");
-    rowIndex++;
-  }
-}
-/*
-  normalSync() - 
-      - 
-*/
-void normalSync() {
-  if (year() != 1970) {
-    setSyncInterval(300);
-    printTask("RTC SYNC", "5 MIN");
-    timer.disable(timer2);
-  }
-}
 /**************************************************************
 
                      Flow Sensor
@@ -112,43 +86,29 @@ void flowSensor() {
 
  **************************************************************/
 /*
-  finish_TAP_shutdown() -
-      - print to terminal the used stats and cost
-      - turn off status led widget
-      - write the usage and cost to the table in two lines
-*/
-void finish_TAP_shutdown() {
-  printTask("TAP", "OFF");
-  printTask("USED", String((float)totalMilliLitres / 1000) + String("L  COST=$") + String(waterCost, 6));
-  Blynk.virtualWrite(vPIN_TAP_LED, 0);
-  Blynk.virtualWrite(vPIN_TABLE, "add", rowIndex, curDateTime(), String( (float)totalMilliLitres / 1000, 6) + String(" L"));
-  rowIndex++;
-  Blynk.virtualWrite(vPIN_TABLE, "add", rowIndex, " ", String("$") + String(waterCost, 6));
-  rowIndex++;
-}
-/*
   TAP_Off() -
       - only trigger if relay is active
       - turn off tap relay
       - dim status led widget to half brightness
       - after 6sec it goes in to it shuts down
+      - print to terminal the used stats and cost
+      - turn off status led widget
+      - write the usage and cost to the table in two lines
 */
 void TAP_Off() {
   if (!digitalRead(TAP)) {
     digitalWrite(TAP, HIGH);
     Blynk.virtualWrite(vPIN_TAP_LED, 128);
     printTask("TAP", "SHUTTING DOWN..");
-    timer.setTimeout(6000, finish_TAP_shutdown);
-  }
-}
-/*
-  tap_limit_value_waterchecker() -
-        - A timed function that checks if the use limit is reached and shuts down the tap
-*/
-void tap_limit_value_waterchecker() {
-  if (tap_limit_value <= (float)totalMilliLitres / 1000) {
-    timer.disable(timer1);
-    TAP_Off();
+    timer.setTimeout(6000, []() {
+      printTask("TAP", "OFF");
+      printTask("USED", String((float)totalMilliLitres / 1000) + String("L  COST=$") + String(waterCost, 3));
+      Blynk.virtualWrite(vPIN_TAP_LED, 0);
+      Blynk.virtualWrite(vPIN_TABLE, "add", rowIndex, curDateTime(), String( (float)totalMilliLitres / 1000, 3) + String(" L"));
+      rowIndex++;
+      Blynk.virtualWrite(vPIN_TABLE, "add", rowIndex, " ", String("$") + String(waterCost, 6));
+      rowIndex++;
+    });
   }
 }
 /*
@@ -157,6 +117,7 @@ void tap_limit_value_waterchecker() {
       - turn on tap relay
       - turn on led status widget
       - depending on limit type start a timer to stop the tap
+      - A timed function that checks if the water use limit is reached and shuts down the tap
 */
 void TAP_On() {
   totalMilliLitres = 0;
@@ -170,7 +131,12 @@ void TAP_On() {
       break;
     case 2:
       printTask("TAP=ON  LIMIT", String(tap_limit_value) + String(" LTRS"));
-      timer1 = timer.setInterval(250, tap_limit_value_waterchecker);
+      timer1 = timer.setInterval(250, []() {
+        if (tap_limit_value <= (float)totalMilliLitres / 1000) {
+          timer.disable(timer1);
+          TAP_Off();
+        }
+      });
       break;
   }
 }
