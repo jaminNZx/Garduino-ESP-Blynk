@@ -14,8 +14,8 @@ Software:
 
 * Download this project as a zip and extract to your project directory in its own folder.
 * Match the pinouts from the code (settings.h). 
-* Download the Blynk mobile app and create a project, add your base and 3 sensors as devices and email yourself the auth codes and put them in the sketchs.
-* Create a new folder in your library dir called 'wifi_credentials' and create a new file called 'wifi_credentials.h' and copy the example below. 
+* Download the Blynk mobile app and create a project. Open the email send to you with the auth code and put it in settings.h.
+* Create a new folder in your library dir called 'wifi_credentials' and create a new file called 'wifi_credentials.h' and copy the example below. Otherwise just enter the credentials in settings. 
 
 ```cpp
 /**************************************************************
