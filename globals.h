@@ -3,7 +3,7 @@
                             Globals
 
  **************************************************************/
-SimpleTimer timer;
+BlynkTimer timer;
 
 WidgetTerminal terminal(vPIN_TERMINAL);
 WidgetRTC rtc;
