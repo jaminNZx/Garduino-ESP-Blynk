@@ -23,7 +23,6 @@
 #include <BlynkSimpleEsp8266.h>
 #include <TimeLib.h>
 #include <WidgetRTC.h>
-#include <SimpleTimer.h>
 
 #include "settings_base.h"
 #include "globals.h"
